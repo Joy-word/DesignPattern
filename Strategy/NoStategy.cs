@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace Strategy {
     /// <summary>
     /// 耦合性太强，判断太多
+    /// 支持不使用的算法也是一种性能负担
     /// </summary>
     enum OutputFormat {
         Markdown,
