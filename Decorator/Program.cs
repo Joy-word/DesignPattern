@@ -3,5 +3,6 @@
 using Decorator.Final;
 
 
-MyStream myStream = new CryptoStream<MyFileStream>();
+MyStream myStream = new BufferStream(new CryptoStream(new MyFileStream()));
+myStream.Read(3);
 Console.WriteLine("Hello, World!");

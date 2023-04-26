@@ -17,37 +17,40 @@ namespace Decorator.Final {
     #region 基本实现
     internal class MyFileStream : MyStream {
         public override void Dispose() {
-            throw new NotImplementedException();
+            
         }
 
         public override string Read(int number) {
-            throw new NotImplementedException();
+            Console.WriteLine("File begin read!");
+            return "Hello";
         }
 
         public override void Seek(int persition) {
-            throw new NotImplementedException();
+            Console.WriteLine("File Seek!");
+
         }
 
         public override void Write(string data) {
-            throw new NotImplementedException();
+            Console.WriteLine($"File Write:{data}!");
         }
     }
 
     internal class MyNetworkStream : MyStream {
         public override void Dispose() {
-            throw new NotImplementedException();
         }
 
         public override string Read(int number) {
-            throw new NotImplementedException();
+            Console.WriteLine("Network begin read!");
+            return "Hello";
         }
 
         public override void Seek(int persition) {
-            throw new NotImplementedException();
+            Console.WriteLine("Network Seek!");
         }
 
         public override void Write(string data) {
-            throw new NotImplementedException();
+            Console.WriteLine($"Network Write:{data}!");
+
         }
     }
 
@@ -57,15 +60,17 @@ namespace Decorator.Final {
         }
 
         public override string Read(int number) {
-            throw new NotImplementedException();
+            Console.WriteLine("Memory begin read!");
+            return "Hello";
         }
 
         public override void Seek(int persition) {
-            throw new NotImplementedException();
+            Console.WriteLine("Memory Seek!");
+
         }
 
         public override void Write(string data) {
-            throw new NotImplementedException();
+            Console.WriteLine($"Memory Write:{data}!");
         }
     }
 
@@ -80,36 +85,65 @@ namespace Decorator.Final {
     }
     #endregion
 
+
     #region 扩展加密实现
-    internal class CryptoStream<T>: MyStream where T : MyStream ,new(){
-        T stream;
-        public CryptoStream() {
-            stream = new T();
+    internal class CryptoStream : DecoratorStream {
+        public CryptoStream(MyStream myStream) : base(myStream) {
         }
 
         public override string Read(int number) {
             DoSthExtend();
-            var file = stream.Read(number);
+            var file = fileStream.Read(number);
             return file;
         }
 
         public override void Seek(int persition) {
             DoSthExtend();
-            stream.Seek(persition);
+            fileStream.Seek(persition);
         }
 
         public override void Write(string data) {
             DoSthExtend();
-            stream.Write(data);
+            fileStream.Write(data);
         }
 
         public void DoSthExtend() {
-
+            Console.WriteLine("Do Cryp...");
         }
 
         public override void Dispose() {
         }
     }
+
+    //internal class CryptoStream<T>: MyStream where T : MyStream ,new(){
+    //    T stream;
+    //    public CryptoStream() {
+    //        stream = new T();
+    //    }
+
+    //    public override string Read(int number) {
+    //        DoSthExtend();
+    //        var file = stream.Read(number);
+    //        return file;
+    //    }
+
+    //    public override void Seek(int persition) {
+    //        DoSthExtend();
+    //        stream.Seek(persition);
+    //    }
+
+    //    public override void Write(string data) {
+    //        DoSthExtend();
+    //        stream.Write(data);
+    //    }
+
+    //    public void DoSthExtend() {
+    //        Console.WriteLine("Do Cryp...");
+    //    }
+
+    //    public override void Dispose() {
+    //    }
+    //}
 
     #endregion
 
@@ -135,7 +169,7 @@ namespace Decorator.Final {
         }
 
         public void DoSthExtend2() {
-
+            Console.WriteLine("Do Buffer...");
         }
 
         public override void Dispose() {
